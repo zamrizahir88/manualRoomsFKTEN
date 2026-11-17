@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual Pengguna · Sistem Tempahan Bilik FKTEN</title>
+<meta name="description" content="Manual pengguna interaktif Sistem Tempahan Bilik FKTEN: tempahan bilik guna sama dan makmal, Fakulti Kejuruteraan & Teknologi Elektronik (FKTEN), Universiti Malaysia Perlis.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23065f46'/%3E%3Ctext x='32' y='30' font-family='Arial' font-weight='800' font-size='15' fill='%23ffffff' text-anchor='middle'%3ERooms%3C/text%3E%3Ctext x='32' y='47' font-family='Arial' font-weight='800' font-size='10' fill='%23fbbf24' text-anchor='middle'%3EFKTEN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<script>
+  (function () { var t = null; try { t = localStorage.getItem('roomsman_theme'); } catch (e) {}
+    if (t) document.documentElement.dataset.theme = t; })();
+</script>
+<style>
+  :root {
+    --em: #064e3b; --em-2: #065f46; --em-3: #0d8a66; --gold: #fbbf24; --red: #dc2626;
+    --bg: #f2f7f4; --surface: #ffffff; --surface-2: #e9f3ee; --text: #0f2a22; --muted: #52645d; --border: #d4e5dc;
+    --accent: var(--em-2); --accent-soft: #e3f5ec; --shadow: 0 10px 40px rgba(6, 40, 30, .12);
+    --ok: #15803d; --warn: #b45309; --err: #b91c1c; --info: #0f766e;
+    --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Plus Jakarta Sans", var(--font);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #05150f; --surface: #0b231a; --surface-2: #103126; --text: #e6f4ee; --muted: #9dbcb0; --border: #1c4535;
+      --accent: #34d399; --accent-soft: rgba(52, 211, 153, .13); --shadow: 0 10px 40px rgba(0, 0, 0, .45);
+      --ok: #4ade80; --warn: #fbbf24; --err: #f87171; --info: #5eead4; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #05150f; --surface: #0b231a; --surface-2: #103126; --text: #e6f4ee; --muted: #9dbcb0; --border: #1c4535;
+    --accent: #34d399; --accent-soft: rgba(52, 211, 153, .13); --shadow: 0 10px 40px rgba(0, 0, 0, .45);
+    --ok: #4ade80; --warn: #fbbf24; --err: #f87171; --info: #5eead4; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); }
+  button { font: inherit; color: inherit; }
+
+  .top { position: fixed; inset: 0 0 auto 0; height: 60px; display: flex; align-items: center; gap: 12px; padding: 0 20px; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .top .name { font-family: var(--display); font-weight: 800; font-size: .98rem; line-height: 1.15; }
+  .top .name small { display: block; font-family: var(--font); font-weight: 600; font-size: .72rem; color: var(--muted); }
+  .top .sp { flex: 1; }
+  .tb { height: 38px; min-width: 38px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 700; font-size: .84rem; text-decoration: none; color: var(--text); }
+  .tb:hover { border-color: var(--accent); }
+  .tb.gold { background: var(--em-2); border-color: var(--em-2); color: #fff; }
+  .tb svg { width: 17px; height: 17px; }
+  .progress { position: absolute; left: 0; bottom: -1px; height: 3px; background: var(--gold); transition: width .3s; }
+
+  .logomark { position: relative; overflow: hidden; flex: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border-radius: 11px; background: linear-gradient(145deg, #10b981 0%, #065f46 60%, #064e3b 100%);
+    box-shadow: 0 6px 16px rgba(6, 95, 70, .32), inset 0 1px 0 rgba(255, 255, 255, .35); }
+  .logomark b { font-family: var(--display); font-weight: 800; font-size: 11px; line-height: 1; color: #fff; }
+  .logomark i { display: block; width: 62%; height: 1.5px; background: rgba(255, 255, 255, .55); margin: 3px 0 2px; }
+  .logomark em { font-style: normal; font-weight: 800; font-size: 6.4px; letter-spacing: .16em; padding-left: .16em; line-height: 1; color: var(--gold); }
+  .logomark.xl { width: 100px; height: 100px; border-radius: 24px; } .logomark.xl b { font-size: 26px; } .logomark.xl em { font-size: 14px; } .logomark.xl i { height: 3px; margin: 6px 0 5px; }
+
+  .deck { position: fixed; inset: 60px 0 58px 0; }
+  .slide { position: absolute; inset: 0; padding: 28px clamp(18px, 4vw, 56px); overflow-y: auto; opacity: 0; visibility: hidden; transform: translateX(30px);
+    transition: opacity .35s, transform .35s, visibility .35s; }
+  .slide.on { opacity: 1; visibility: visible; transform: none; }
+  .slide.prev { transform: translateX(-30px); }
+  .inner { max-width: 1240px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; justify-content: center; }
+  .kicker { font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; gap: 8px; align-items: center; }
+  .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+  h1, h2, h3 { font-family: var(--display); margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1.15; }
+  h3 { font-size: 1.05rem; }
+  .lead { font-size: clamp(.98rem, 1.25vw, 1.12rem); color: var(--muted); line-height: 1.6; margin: 12px 0 0; max-width: 780px; }
+  p { line-height: 1.6; }
+
+  .split { display: grid; grid-template-columns: minmax(300px, 0.85fr) 1.5fr; gap: clamp(20px, 3vw, 44px); align-items: center; }
+  .split.rev { grid-template-columns: 1.5fr minmax(300px, 0.85fr); }
+  .split.rev .txt { order: 2; }
+  .frame { margin: 0; border-radius: 14px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); border: 1px solid var(--border); cursor: zoom-in; position: relative; }
+  .frame .bar { height: 26px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .frame .bar span { width: 9px; height: 9px; border-radius: 50%; background: #cbd3e3; }
+  .frame .bar span:nth-child(1) { background: #ff6b6b; } .frame .bar span:nth-child(2) { background: #ffc94d; } .frame .bar span:nth-child(3) { background: #3ccf6e; }
+  .frame img { display: block; width: 100%; height: auto; }
+  .frame .zoom { position: absolute; right: 10px; bottom: 10px; background: rgba(4, 30, 22, .78); color: #fff; font-size: .72rem; font-weight: 700; padding: 5px 10px; border-radius: 999px; opacity: 0; transition: opacity .2s; }
+  .frame:hover .zoom { opacity: 1; }
+  .frames2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mailshot img { max-height: 52vh; object-fit: cover; object-position: top; }
+  .frames2 .frame img { max-height: 46vh; object-fit: cover; object-position: top; }
+  .phones { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+  .phone { width: 250px; border-radius: 34px; border: 9px solid #04130e; overflow: hidden; box-shadow: var(--shadow); cursor: zoom-in; }
+  .phone img { display: block; width: 100%; }
+
+  ol.steps { list-style: none; padding: 0; margin: 20px 0 0; counter-reset: s; display: grid; gap: 12px; }
+  ol.steps li { counter-increment: s; position: relative; padding: 3px 0 0 42px; min-height: 30px; line-height: 1.5; font-size: .96rem; }
+  ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--em-2); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .85rem; }
+  ul.ticks { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 9px; }
+  ul.ticks li { padding-left: 26px; position: relative; line-height: 1.5; font-size: .96rem; }
+  ul.ticks li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--ok); font-weight: 800; }
+  .tip { margin-top: 18px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--gold); font-size: .9rem; line-height: 1.55; }
+  .tip.warn { background: color-mix(in srgb, var(--warn) 12%, transparent); border-left-color: var(--warn); }
+  .ui { display: inline-block; padding: 1px 8px; border-radius: 7px; background: var(--surface-2); border: 1px solid var(--border); font-weight: 700; font-size: .88em; white-space: nowrap; }
+  .ui.gold { background: var(--em-2); border-color: var(--em-2); color: #fff; }
+  .ui.red { background: var(--red); border-color: var(--red); color: #fff; }
+
+  .cards { display: grid; gap: 16px; margin-top: 26px; }
+  .c2 { grid-template-columns: repeat(2, 1fr); } .c3 { grid-template-columns: repeat(3, 1fr); } .c4 { grid-template-columns: repeat(4, 1fr); } .c5 { grid-template-columns: repeat(5, 1fr); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(6, 40, 30, .05); }
+  .card .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-size: 1.25rem; margin-bottom: 12px; }
+  .card p { margin: 6px 0 0; color: var(--muted); font-size: .92rem; }
+  .big { font-family: var(--display); font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  a.card { text-decoration: none; color: inherit; transition: transform .15s, border-color .15s; }
+  a.card:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .vs .card h3 { display: flex; gap: 8px; align-items: center; }
+  .vs .old { border-color: color-mix(in srgb, var(--err) 35%, var(--border)); }
+  .vs .new { border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); }
+  .vs ul { margin: 10px 0 0; padding-left: 20px; line-height: 1.65; font-size: .94rem; }
+
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; position: relative; }
+  .flow .card { position: relative; cursor: pointer; transition: border-color .2s, transform .2s; }
+  .flow .card.on, .flow .card:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .flow .n { width: 34px; height: 34px; border-radius: 50%; background: var(--gold); color: #04130e; display: grid; place-items: center; font-weight: 800; margin-bottom: 10px; }
+  .flow .card:not(:last-child)::after { content: '→'; position: absolute; right: -14px; top: 50%; transform: translate(50%, -50%); color: var(--muted); font-weight: 800; }
+  .flow-detail { margin-top: 16px; min-height: 64px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .chip { padding: 5px 12px; border-radius: 999px; font-size: .8rem; font-weight: 700; border: 1px solid transparent; }
+  .s-pend { background: #fef3c7; color: #92400e; } .s-ok { background: #dcfce7; color: #166534; } .s-rej { background: #fee2e2; color: #991b1b; }
+  .s-can { background: #eef0f4; color: #475569; } .s-khas { background: #dbe4f0; color: #1e3a5f; } .s-exp { background: #f1f5f9; color: #64748b; }
+
+  table.t { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: .92rem; background: var(--surface); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(6, 40, 30, .05); }
+  table.t th, table.t td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  table.t th { background: var(--surface-2); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  table.t tr:last-child td { border-bottom: 0; }
+  .twrap { overflow-x: auto; }
+
+  .slide.cover, .slide.section { background: radial-gradient(1000px 600px at 85% 15%, rgba(251, 191, 36, .16), transparent 60%), linear-gradient(135deg, #04130e, #064e3b 55%, #0d8a66); color: #fff; }
+  .cover .inner, .section .inner { align-items: flex-start; }
+  .cover h1 { font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.05; margin-top: 26px; }
+  .cover .fac { color: #c8eadb; font-weight: 600; margin-top: 12px; font-size: clamp(1rem, 1.4vw, 1.2rem); }
+  .cover .eyebrow { display: inline-block; margin-top: 30px; padding: 6px 14px; border-radius: 999px; background: rgba(251, 191, 36, .16); color: var(--gold); font-weight: 800; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+  .cover .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+  .cover .btn { padding: 13px 22px; border-radius: 12px; font-weight: 800; text-decoration: none; border: 1px solid rgba(255, 255, 255, .25); color: #fff; background: rgba(255, 255, 255, .06); cursor: pointer; font-size: .95rem; }
+  .cover .btn.gold { background: var(--gold); color: #04130e; border-color: var(--gold); }
+  .cover .hint { margin-top: 26px; color: #a7d8c4; font-size: .85rem; }
+  .cover .unimap { position: absolute; right: clamp(18px, 4vw, 56px); top: 28px; background: #fff; border-radius: 12px; padding: 8px 12px; }
+  .cover .unimap img { height: 44px; display: block; }
+  .section .num { font-family: var(--display); font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; color: var(--gold); line-height: 1; opacity: .9; }
+  .section h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-top: 10px; }
+  .section .lead { color: #c8eadb; }
+  .section .who { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+  .section .who span { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .25); font-weight: 700; font-size: .85rem; }
+
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0 16px; }
+  details + details { margin-top: 10px; }
+  summary { cursor: pointer; padding: 14px 0; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::after { content: '+'; color: var(--accent); font-weight: 800; font-size: 1.2rem; line-height: 1; }
+  details[open] summary::after { content: '–'; }
+  details p { margin: 0 0 14px; color: var(--muted); font-size: .94rem; }
+  .faq { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; align-items: start; }
+
+  .bottom { position: fixed; inset: auto 0 0 0; height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 20px; z-index: 20;
+    border-top: 1px solid var(--border); background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); }
+  .bottom .count { font-weight: 700; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .bottom .title { font-weight: 700; font-size: .88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: center; }
+  .navbtn { height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
+  .navbtn.next { background: var(--em-2); color: #fff; border-color: var(--em-2); }
+  .navbtn:disabled { opacity: .4; cursor: default; }
+
+  .overview { position: fixed; inset: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: blur(6px); overflow-y: auto; padding: 24px clamp(16px, 4vw, 48px); display: none; }
+  .overview.on { display: block; }
+  .ov-head { display: flex; justify-content: space-between; align-items: center; max-width: 1240px; margin: 0 auto 18px; }
+  .ov-group { max-width: 1240px; margin: 0 auto 22px; }
+  .ov-group h3 { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .ov-item { text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-weight: 600; font-size: .88rem; display: flex; gap: 10px; align-items: baseline; }
+  .ov-item b { color: var(--accent); font-variant-numeric: tabular-nums; min-width: 22px; }
+  .ov-item.on { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+
+  .lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(2, 12, 8, .92); display: none; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+  .lightbox.on { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 100%; border-radius: 10px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+  .lightbox .x { position: absolute; top: 16px; right: 20px; color: #fff; font-size: .85rem; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .split, .split.rev { grid-template-columns: 1fr; }
+    .split.rev .txt { order: 0; }
+    .c3, .c4, .c5, .flow { grid-template-columns: 1fr 1fr; }
+    .flow .card::after { display: none; }
+    .faq, .vs { grid-template-columns: 1fr; }
+    .faq > div + div { margin-top: 10px; }
+    .inner { justify-content: flex-start; }
+    .top .hide-sm, .bottom .title { display: none; }
+  }
+  @media (max-width: 560px) {
+    .c2, .c3, .c4, .c5, .flow, .frames2 { grid-template-columns: 1fr; }
+    .top { padding: 0 12px; } .top .name small { display: none; }
+    .cover .unimap { position: static; display: inline-block; margin-bottom: 8px; }
+    table.t { font-size: .84rem; } table.t th, table.t td { padding: 9px 10px; }
+    .phone { width: 200px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
+  @media print {
+    body { overflow: visible; } .top, .bottom, .overview, .lightbox { display: none !important; }
+    .deck { position: static; } .slide { position: relative; opacity: 1; visibility: visible; transform: none; page-break-after: always; overflow: visible; min-height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="logomark"><b>Rooms</b><i></i><em>FKTEN</em></span>
+  <div class="name">Manual Pengguna<small>Sistem Tempahan Bilik FKTEN</small></div>
+  <div class="sp"></div>
+  <a class="tb gold" href="https://script.google.com/a/macros/unimap.edu.my/s/AKfycbwsCuKU1bOhOyePvo0hmSApTvA7wn9X55o3rDx_f9dq1w21M48icOwcY6fN0G-ejtoR/exec" target="_blank" rel="noopener" title="Buka sistem sebenar" style="white-space:nowrap"><span class="hide-sm">Buka&nbsp;</span>Sistem ↗</a>
+  <button class="tb" id="btn-ov" title="Semua slaid (O)" aria-label="Semua slaid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="hide-sm">Kandungan</span></button>
+  <button class="tb" id="btn-theme" title="Tema cerah / gelap" aria-label="Tukar tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <button class="tb hide-sm" id="btn-fs" title="Skrin penuh (F)" aria-label="Skrin penuh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main class="deck" id="deck">
+
+  <!-- ============================== PENGENALAN -->
+  <section class="slide cover" data-title="Manual Pengguna" data-group="Pengenalan">
+    <div class="unimap"><img src="assets/unimap_logo.png" alt="Universiti Malaysia Perlis"></div>
+    <div class="inner">
+      <span class="logomark xl"><b>Rooms</b><i></i><em>FKTEN</em></span>
+      <span class="eyebrow">Manual Pengguna</span>
+      <h1>Sistem Tempahan Bilik FKTEN</h1>
+      <div class="fac">Fakulti Kejuruteraan &amp; Teknologi Elektronik (FKTEN) · Universiti Malaysia Perlis</div>
+      <p class="lead" style="color:#c8eadb">Tempah bilik guna sama dan makmal fakulti secara dalam talian: semak kekosongan masa nyata, PIC meluluskan, makluman emel automatik dan acara terus ke Google Calendar anda.</p>
+      <div class="btns">
+        <button class="btn gold" data-go="next">Mula →</button>
+        <button class="btn" data-ov>Lihat kandungan</button>
+        <a class="btn" href="https://script.google.com/a/macros/unimap.edu.my/s/AKfycbwsCuKU1bOhOyePvo0hmSApTvA7wn9X55o3rDx_f9dq1w21M48icOwcY6fN0G-ejtoR/exec" target="_blank" rel="noopener">Buka sistem sebenar ↗</a>
+      </div>
+      <div class="hint">Guna kekunci ← → atau leret skrin untuk bertukar slaid. Klik gambar skrin untuk besarkan. Tekan F untuk skrin penuh.</div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Kandungan" data-group="Pengenalan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Kandungan</div>
+      <h2>Apa yang ada dalam manual ini</h2>
+      <p class="lead">Semua staf boleh mula dengan Bahagian 1 dan 2. PIC bilik dan makmal: lihat juga Bahagian 3.</p>
+      <div class="cards c4">
+        <a class="card" href="#" data-jump="pengenalan"><div class="ico">📘</div><h3>1 · Pengenalan</h3><p>Kenapa sistem ini, aliran proses, peranan, bilik dan makmal yang diliputi.</p></a>
+        <a class="card" href="#" data-jump="staf"><div class="ico">📅</div><h3>2 · Membuat tempahan</h3><p>Pilih masa, isi borang, tunggu kelulusan, Tempahan Saya dan pembatalan.</p></a>
+        <a class="card" href="#" data-jump="pic"><div class="ico">✅</div><h3>3 · PIC bilik &amp; makmal</h3><p>Lulus / tolak, Tempahan Khas, tempah bagi pihak, tetapan bilik dan gambar.</p></a>
+        <a class="card" href="#" data-jump="admin"><div class="ico">⚙️</div><h3>4 · Pentadbir</h3><p>Cuti &amp; penutupan, pengguna &amp; peranan, tetapan sistem dan log emel.</p></a>
+      </div>
+      <div class="cards c3" style="margin-top:16px">
+        <a class="card" href="#" data-jump="rujukan"><div class="ico">📏</div><h3>Peraturan &amp; emel</h3><p>Ringkasan peraturan tempahan, akses makmal dan emel automatik.</p></a>
+        <a class="card" href="#" data-jump="faq"><div class="ico">❓</div><h3>Soalan lazim</h3><p>Jawapan ringkas kepada soalan yang biasa ditanya.</p></a>
+        <a class="card" href="#" data-jump="cuba"><div class="ico">🧪</div><h3>Cuba sistem sebenar</h3><p>Langkah ujian untuk PIC dan maklum balas.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Kenapa sistem ini?" data-group="Pengenalan" data-anchor="pengenalan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Pengenalan</div>
+      <h2>Kenapa sistem tempahan baharu?</h2>
+      <p class="lead">Sebelum ini tempahan dibuat dengan menjemput akaun tempahan ke acara Google Calendar dan PIC menerima jemputan tersebut. Kaedah itu mudah, tetapi sukar dipantau.</p>
+      <div class="vs">
+        <div class="card old"><h3>✕ Kaedah lama (jemputan Calendar)</h3><ul>
+          <li>Tiada paparan kekosongan semua bilik dalam satu skrin</li>
+          <li>Tempahan bertindih boleh berlaku</li>
+          <li>Status kelulusan tidak jelas kepada pemohon</li>
+          <li>Tiada rekod, sejarah atau laporan penggunaan</li>
+          <li>Makmal tidak termasuk</li></ul></div>
+        <div class="card new"><h3>✓ Sistem Tempahan Bilik FKTEN</h3><ul>
+          <li>Jadual <b>masa nyata</b> semua bilik guna sama dan makmal</li>
+          <li><b>Tiada pertindihan</b>: slot terus dikunci sebaik ditempah</li>
+          <li>PIC lulus / tolak dalam sistem, <b>emel automatik</b> kepada pemohon</li>
+          <li>Acara diluluskan terus masuk <b>Google Calendar</b> pemohon</li>
+          <li>Sejarah, laporan penggunaan, tempahan khas untuk jadual kelas</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Aliran proses" data-group="Pengenalan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Pengenalan</div>
+      <h2>Aliran tempahan dalam 4 langkah</h2>
+      <p class="lead">Klik setiap langkah untuk penerangan.</p>
+      <div class="flow" id="flow">
+        <div class="card" data-d="Buka Tempah Bilik › Bilik Guna Sama atau Makmal. Jadual menunjukkan semua bilik dan slot 30 minit: putih = kosong."><div class="n">1</div><h3>Pilih ruang &amp; masa</h3><p>Klik slot kosong pada jadual.</p></div>
+        <div class="card" data-d="Kad masa muncul: pilih masa tamat, klik Teruskan, isi tajuk, bilangan peserta dan no. telefon, tandakan akuan dan hantar. Status: Menunggu Kelulusan."><div class="n">2</div><h3>Hantar tempahan</h3><p>Status: Menunggu Kelulusan.</p></div>
+        <div class="card" data-d="PIC bilik menerima emel, menyemak dan meluluskan atau menolak (dengan sebab) dalam halaman Kelulusan. Slot dikunci sepanjang tempoh menunggu."><div class="n">3</div><h3>PIC meluluskan</h3><p>Lulus atau tolak dengan sebab.</p></div>
+        <div class="card" data-d="Pemohon menerima emel kelulusan dan acara ditambah ke Google Calendar beliau. Peringatan dihantar sehari sebelum. Batalkan dalam sistem jika tidak lagi diperlukan."><div class="n">4</div><h3>Masuk Google Calendar</h3><p>Emel + acara kalendar.</p></div>
+      </div>
+      <div class="tip flow-detail" id="flow-detail"></div>
+      <div class="chips"><span class="chip s-pend">Menunggu Kelulusan</span><span class="chip s-ok">Diluluskan</span><span class="chip s-rej">Ditolak</span><span class="chip s-can">Dibatalkan</span><span class="chip s-khas">Tempahan Khas</span><span class="chip s-exp">Luput</span></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Peranan pengguna" data-group="Pengenalan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Pengenalan</div>
+      <h2>Siapa menggunakan sistem ini</h2>
+      <p class="lead">Log masuk dengan akaun Google UniMAP (@unimap.edu.my). Peranan ditentukan secara automatik; akaun pelajar tidak dibenarkan.</p>
+      <div class="cards c5">
+        <div class="card"><div class="ico">👩‍💼</div><h3>Staf FKTEN</h3><p>Tempah semua bilik guna sama dan makmal. Maklumat dibaca daripada Senarai Induk Staf FKTEN.</p></div>
+        <div class="card"><div class="ico">🧑‍💻</div><h3>Staf FKC</h3><p>Fakulti Komputeraan Cerdas: boleh menempah <b>makmal sahaja</b>. Isi profil sekali (seperti UniSIS).</p></div>
+        <div class="card"><div class="ico">👀</div><h3>Staf fakulti lain</h3><p>Boleh melihat jadual sahaja. Untuk tempahan, hubungi PIC (PIC boleh tempah bagi pihak).</p></div>
+        <div class="card"><div class="ico">🔑</div><h3>PIC bilik / makmal</h3><p>Lulus / tolak tempahan bilik jagaan, tempahan khas, tetapan bilik dan gambar. Makmal: Penolong Jurutera.</p></div>
+        <div class="card"><div class="ico">⚙️</div><h3>Pentadbir</h3><p>Pantau dan bertindak ke atas semua bilik, urus cuti, peranan, tetapan dan log emel.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Ruang yang diliputi" data-group="Pengenalan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Pengenalan</div>
+      <h2>Ruang yang boleh ditempah</h2>
+      <div class="cards c2">
+        <div class="card"><div class="big">8</div><h3 style="margin-top:8px">Bilik Guna Sama · staf FKTEN</h3><p>Dewan Serbaguna, Bilik Mesyuarat Dekan, Bilik Mesyuarat Utama, Bilik Diskusi, Bilik Tutorial, Bilik Viva-Voce, Bilik Vibe 1 dan Bilik Vibe 2.</p></div>
+        <div class="card"><div class="big">17</div><h3 style="margin-top:8px">Makmal · staf FKTEN &amp; FKC</h3><p>Optoelektronik, Fotonik, Komputer, IC Termaju, Elektronik Asas, Mikro Pemprosesan, Simulasi Komputer A/B, IC A/B, Bilik Bersih, Analisa Kegagalan, Pengkomputeran Bioperubatan, Bioinstrumentasi, Biobahan, Peranti Perubatan, Biomekanik.</p></div>
+      </div>
+      <div class="tip">Setiap bilik mempunyai PIC sendiri. Bagi makmal, pelulus ialah <b>Penolong Jurutera (PJ)</b>; nama Penyelaras dipaparkan sebagai makluman sahaja. Waktu operasi, kemudahan dan gambar ditetapkan oleh PIC.</div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Log masuk & laman utama" data-group="Pengenalan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Pengenalan</div>
+        <h2>Log masuk &amp; laman utama</h2>
+        <ol class="steps">
+          <li>Buka pautan sistem dan log masuk dengan <b>akaun Google UniMAP</b> anda.</li>
+          <li>Laman utama memaparkan ucapan, ringkasan tempahan anda dan bilangan ruang yang kosong sekarang.</li>
+          <li>Bahagian <b>Tempah Ruang Sekarang</b>: pilih <span class="ui">Bilik Guna Sama</span> atau <span class="ui">Makmal</span>.</li>
+          <li>Menu kiri: <b>Tempah Bilik</b> (dua halaman), <b>Tempahan Saya</b> dan menu PIC / Pentadbir mengikut peranan.</li>
+        </ol>
+        <div class="tip">Jika akaun yang salah dibuka, klik <span class="ui">Tukar akaun</span> di bawah menu kiri.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/01-home.jpg" alt="Laman utama" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Profil staf luar Senarai Induk" data-group="Pengenalan">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Pengenalan</div>
+        <h2>Profil (staf FKC &amp; staf baharu)</h2>
+        <ul class="ticks">
+          <li>Staf FKTEN dalam Senarai Induk: <b>tiada apa perlu diisi</b>.</li>
+          <li>Staf lain (FKC, staf FKTEN baharu, fakulti lain) mengisi profil <b>sekali</b> sebelum tempahan pertama.</li>
+          <li>Isi <b>sama seperti dalam UniSIS</b>: gelaran, nama penuh, fakulti, jabatan, jawatan dan no. telefon.</li>
+          <li>Boleh dikemas kini kemudian melalui <span class="ui">Profil Saya</span>.</li>
+        </ul>
+        <div class="tip">Staf FKTEN baharu: Admin akan menambah anda ke Senarai Induk Staf FKTEN.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/35-profile.jpg" alt="Profil" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <!-- ============================== STAF -->
+  <section class="slide section" data-title="Bahagian 2: Membuat tempahan" data-group="Membuat tempahan" data-anchor="staf">
+    <div class="inner">
+      <div class="num">02</div>
+      <h2>Membuat tempahan</h2>
+      <p class="lead">Untuk semua staf: pilih ruang dan masa, hantar tempahan, pantau status dan batalkan jika tidak diperlukan.</p>
+      <div class="who"><span>Staf FKTEN</span><span>Staf FKC (makmal)</span><span>PIC &amp; Pentadbir</span></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Pilih kategori" data-group="Membuat tempahan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Tempah Ruang Sekarang</h2>
+        <ul class="ticks">
+          <li>Dua kategori: <b>Bilik Guna Sama</b> dan <b>Makmal</b>, masing-masing dengan bilangan yang kosong sekarang.</li>
+          <li><span class="ui gold">Tempah sekarang</span> terus ke jadual tempahan.</li>
+          <li><span class="ui">Lihat senarai</span> membuka kad setiap bilik; klik kad untuk halaman bilik (gambar, kemudahan, waktu operasi, PIC).</li>
+        </ul>
+        <div class="tip">Staf FKC hanya melihat kategori Makmal.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/02-home-list.jpg" alt="Tempah Ruang Sekarang" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Jadual tempahan" data-group="Membuat tempahan">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Jadual tempahan</h2>
+        <ul class="ticks">
+          <li>Setiap baris = satu bilik; setiap petak = <b>30 minit</b>. Garis merah = masa sekarang.</li>
+          <li>Warna: putih kosong · hijau tempahan anda · jingga menunggu · kelabu ditempah · biru gelap tempahan khas / kelas · berjalur tutup.</li>
+          <li>Tukar tarikh dengan ← → atau <span class="ui">Kosong seterusnya</span>. Tapis ikut kapasiti atau kemudahan.</li>
+          <li>Butang bulat <b>◀ ▶</b> di tengah skrin untuk menatal ke kiri / kanan (klik atau tekan lama).</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/03-grid-bilik.jpg" alt="Jadual bilik guna sama" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Jadual makmal" data-group="Membuat tempahan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Makmal: cari &amp; tapis</h2>
+        <ul class="ticks">
+          <li>Halaman <span class="ui">Tempah Bilik › Makmal</span> menyenaraikan 17 makmal dengan kod dan bangunan.</li>
+          <li><b>Carian</b>: taip nama atau kod, cth. <i>IC</i>, <i>MMCP</i>.</li>
+          <li>Tapis ikut bangunan: <span class="ui">Pink</span> atau <span class="ui">Biru</span>.</li>
+          <li>Kelas mengikut jadual akademik dipaparkan sebagai <b>tempahan khas</b>.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/04-grid-makmal.jpg" alt="Jadual makmal" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Lihat butiran tempahan" data-group="Membuat tempahan">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Siapa yang menempah?</h2>
+        <ul class="ticks">
+          <li>Letak tetikus pada blok tempahan: kad kecil menunjukkan <b>tajuk, masa, bilik, pemohon dan status</b>.</li>
+          <li>Di telefon: <b>ketik sekali</b> untuk kad, ketik lagi (atau <span class="ui">Lihat butiran</span>) untuk butiran penuh.</li>
+          <li>Klik blok untuk butiran penuh dan sejarah tindakan.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/05-peek.jpg" alt="Kad butiran tempahan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Langkah 1: Pilih masa" data-group="Membuat tempahan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan · Langkah 1</div>
+        <h2>Pilih masa</h2>
+        <ol class="steps">
+          <li>Klik slot kosong (atau seret merentasi beberapa slot).</li>
+          <li>Kad <b>Pilih masa tempahan</b> muncul di tengah skrin.</li>
+          <li>Pilih <b>Tamat</b>: senarai hanya menunjukkan masa yang masih kosong secara berturutan, jadi tidak akan bertindih.</li>
+          <li><span class="ui gold">Teruskan</span> ke borang, atau <span class="ui">Batal pilihan</span> untuk memilih masa / bilik lain.</li>
+        </ol>
+        <div class="tip">Tetingkap hanya ditutup dengan butang X atau Batal; klik di luar tidak menutupnya.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/06-timecard.jpg" alt="Kad pilih masa" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Langkah 2: Borang tempahan" data-group="Membuat tempahan">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan · Langkah 2</div>
+        <h2>Isi borang tempahan</h2>
+        <ul class="ticks">
+          <li>Bilik, tarikh dan masa <b>diisi automatik</b> daripada langkah 1.</li>
+          <li>Isi <b>tajuk</b>, tujuan, bilangan peserta dan keperluan tambahan.</li>
+          <li><b>No. telefon wajib</b>: PIC akan menghubungi nombor ini jika perlu penjelasan.</li>
+          <li>Tandakan akuan penggunaan dan klik <span class="ui gold">Hantar tempahan</span>.</li>
+          <li><span class="ui">← Tukar masa</span> kembali ke langkah 1 tanpa kehilangan maklumat yang telah ditaip.</li>
+        </ul>
+        <div class="tip warn">Tempahan dalam tempoh notis (3 hari bekerja) masih boleh dibuat tetapi ditanda <b>Segera</b> tanpa jaminan kelulusan; hubungi PIC terus.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/07-form.jpg" alt="Borang tempahan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Hantar & tunggu" data-group="Membuat tempahan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+      <h2>Hantar &amp; tunggu kelulusan</h2>
+      <p class="lead">Semasa sistem menyimpan, skrin dikaburkan dengan mesej <b>"Sila tunggu. Jangan tutup atau muat semula halaman ini."</b> Selepas berjaya, nombor rujukan dipaparkan dan emel pengesahan dihantar kepada anda dan PIC.</p>
+      <div class="frames2" style="margin-top:22px">
+        <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/08-wait.jpg" alt="Sila tunggu" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+        <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/10-sent.jpg" alt="Tempahan dihantar" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Tempahan Saya" data-group="Membuat tempahan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Tempahan Saya</h2>
+        <ul class="ticks">
+          <li>Senarai <b>Akan datang</b> dan <b>Lepas &amp; lain-lain</b>, boleh ditapis ikut Bilik Guna Sama / Makmal.</li>
+          <li>Status berwarna; tempahan diluluskan ditanda <i>Dalam Google Calendar</i>.</li>
+          <li><span class="ui">Buka di Calendar</span>, <span class="ui">Batal</span> dan <span class="ui">Butiran</span>.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/11-mine.jpg" alt="Tempahan Saya" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Batal tempahan" data-group="Membuat tempahan">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Batalkan jika tidak diperlukan</h2>
+        <ol class="steps">
+          <li>Klik <span class="ui">Batal</span> pada tempahan (sebelum masa mula).</li>
+          <li>Panel pengesahan muncul: isi sebab (pilihan).</li>
+          <li>Klik <span class="ui red">Sahkan batal</span>, atau <span class="ui">Kembali</span> jika tersilap.</li>
+        </ol>
+        <div class="tip">Slot dibuka semula untuk staf lain, PIC dimaklumkan dan acara dipadam daripada Google Calendar anda. Elakkan tempahan tanpa penggunaan.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/12-cancel.jpg" alt="Batal tempahan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Halaman bilik" data-group="Membuat tempahan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Membuat tempahan</div>
+        <h2>Halaman bilik</h2>
+        <ul class="ticks">
+          <li>Galeri gambar (klik untuk besarkan), keterangan, lokasi, kapasiti dan tempat ambil kunci.</li>
+          <li>Kekosongan 7 hari, waktu operasi dan kemudahan.</li>
+          <li>PIC dengan butang <b>telefon</b> dan <b>WhatsApp</b>.</li>
+          <li><span class="ui gold">Tempah bilik ini</span> terus ke jadual bilik tersebut.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/13-room.jpg" alt="Halaman bilik" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <!-- ============================== PIC -->
+  <section class="slide section" data-title="Bahagian 3: PIC" data-group="PIC bilik & makmal" data-anchor="pic">
+    <div class="inner">
+      <div class="num">03</div>
+      <h2>PIC bilik &amp; makmal</h2>
+      <p class="lead">Meluluskan tempahan, menyekat slot untuk kelas, memindahkan tempahan sedia ada dan menjaga maklumat bilik.</p>
+      <div class="who"><span>PIC Pentadbiran bilik</span><span>Penolong Jurutera makmal</span><span>Pentadbir (semua bilik)</span></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Kelulusan" data-group="PIC bilik & makmal">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Senarai kelulusan</h2>
+        <ul class="ticks">
+          <li>Emel dihantar kepada PIC bagi setiap tempahan baharu; nombor merah pada menu <span class="ui">Kelulusan</span>.</li>
+          <li>Tab: <b>Menunggu kelulusan</b>, <b>Hari ini</b>, <b>Sejarah</b>. Tapis ikut kategori atau bilik.</li>
+          <li>Setiap tempahan menunjukkan pemohon (dan tag <b>FKC</b> jika berkenaan), masa dan tanda <b>Segera</b>.</li>
+          <li>Ringkasan harian dihantar setiap pagi hari bekerja jam 7:30.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/20-approvals.jpg" alt="Kelulusan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Luluskan" data-group="PIC bilik & makmal">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Luluskan (2 langkah)</h2>
+        <ol class="steps">
+          <li>Klik <span class="ui gold">Lulus</span>: panel pengesahan dengan butiran tempahan dipaparkan. <b>Belum ada yang dihantar.</b></li>
+          <li>Tambah catatan kepada pemohon jika perlu (pilihan), cth. masa ambil kunci.</li>
+          <li>Klik <span class="ui gold">Sahkan lulus</span>.</li>
+        </ol>
+        <div class="tip">Pemohon menerima emel kelulusan dan acara Google Calendar. Semua PIC bilik dan admin menerima salinan.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/21-approve.jpg" alt="Sahkan lulus" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Tolak" data-group="PIC bilik & makmal">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Tolak &amp; batal oleh PIC</h2>
+        <ol class="steps">
+          <li>Klik <span class="ui red">Tolak</span> dan nyatakan <b>sebab</b> (wajib).</li>
+          <li>Klik <span class="ui red">Sahkan tolak</span>; sebab dihantar melalui emel kepada pemohon.</li>
+        </ol>
+        <ul class="ticks">
+          <li><b>Batal oleh PIC</b> (tempahan yang telah diluluskan, cth. penggunaan segera fakulti): sebab wajib, pemohon diemel dan acara kalendar dipadam.</li>
+          <li><b>Tanda tidak hadir</b>: selepas tempahan tamat, sehingga 7 hari.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/22-reject.jpg" alt="Sahkan tolak" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Tempahan Khas" data-group="PIC bilik & makmal">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Tempahan Khas (jadual kelas)</h2>
+        <ul class="ticks">
+          <li>Sekat slot terus tanpa kelulusan: <b>kelas mengikut jadual akademik</b>, penyelenggaraan, program fakulti.</li>
+          <li><b>Sekali</b> atau <b>berulang setiap minggu</b> (pilih hari dan tempoh semester); boleh melangkau hari cuti.</li>
+          <li><span class="ui">Semak tarikh &amp; pertindihan</span> sebelum simpan.</li>
+          <li>Jika bertindih: <b>Langkau</b> tarikh tersebut (disyorkan) atau <b>Gantikan</b> tempahan sedia ada dengan sebab (pemohon diemel).</li>
+        </ul>
+        <div class="tip">Tempahan khas tidak terikat had 2 bulan, jadi seluruh semester boleh dimasukkan sekali gus.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/23-khas.jpg" alt="Tempahan Khas" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Tempah bagi pihak & pindahan" data-group="PIC bilik & makmal">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Tempah bagi pihak &amp; pindahan</h2>
+        <ol class="steps">
+          <li>Pilih masa seperti biasa, kemudian tandakan <b>Tempah bagi pihak staf lain</b>.</li>
+          <li>Masukkan emel staf UniMAP. Jika tiada dalam Senarai Induk, isi maklumat beliau seperti UniSIS.</li>
+          <li>Untuk tempahan daripada kaedah lama, tandakan <b>Pindahan</b>.</li>
+          <li>Klik <span class="ui gold">Simpan &amp; luluskan</span>.</li>
+        </ol>
+        <div class="tip">Tempahan terus <b>diluluskan</b>, tiada had 2 bulan. Pemohon menerima emel (<i>"dipindahkan ke sistem baharu"</i> untuk pindahan) dan acara Google Calendar, serta boleh membatalkannya sendiri.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/28-behalf.jpg" alt="Tempah bagi pihak" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Tetapan Bilik" data-group="PIC bilik & makmal">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Tetapan Bilik: maklumat</h2>
+        <ul class="ticks">
+          <li>Nama, blok, aras, <b>kapasiti</b>, tempat ambil kunci, panduan lokasi.</li>
+          <li>Keterangan dan peraturan khusus bilik (dipaparkan kepada pemohon).</li>
+          <li>Tempoh notis dan had tempahan awal khusus bilik (kosong = tetapan lalai).</li>
+          <li><b>Boleh ditempah</b>: nyahtanda untuk menutup sementara (cth. renovasi).</li>
+        </ul>
+        <div class="tip">Mohon semua PIC menyemak dan melengkapkan maklumat bilik masing-masing.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/24-room-info.jpg" alt="Tetapan bilik" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Waktu operasi" data-group="PIC bilik & makmal">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Waktu operasi</h2>
+        <ul class="ticks">
+          <li>Tandakan <b>Buka</b> bagi setiap hari; hari ditutup dikelabukan.</li>
+          <li>Tetapkan waktu buka dan tutup (slot 30 minit).</li>
+          <li><b>Rehat</b>: cth. Jumaat 12:15–14:45 menyekat slot 12:00–15:00. Pilih <i>Tiada</i> jika tiada rehat.</li>
+          <li>Jika ada tempahan terjejas, sistem bertanya: <b>kekalkan</b> atau <b>batalkan</b> (dengan sebab).</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/25-room-hours.jpg" alt="Waktu operasi" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Gambar bilik" data-group="PIC bilik & makmal">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Gambar bilik</h2>
+        <ol class="steps">
+          <li>Tab <span class="ui">Gambar</span> › <span class="ui gold">Muat naik gambar</span> (boleh pilih beberapa sekali gus, sehingga 8).</li>
+          <li>Gambar dikecilkan secara automatik sebelum dimuat naik.</li>
+          <li>★ jadikan <b>gambar utama</b> (kad bilik &amp; atas halaman bilik); ◀ ▶ susun; 🗑 padam.</li>
+        </ol>
+        <div class="tip">Gambar disimpan dalam Google Drive fakulti dan hanya boleh dilihat oleh akaun UniMAP.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/26-room-photos.jpg" alt="Gambar bilik" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Laporan" data-group="PIC bilik & makmal">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>PIC</div>
+        <h2>Laporan penggunaan</h2>
+        <ul class="ticks">
+          <li>Bagi setiap bulan: tempahan staf, jam digunakan, jam tempahan khas dan <b>kadar penggunaan</b>.</li>
+          <li>Bilangan batal, ditolak, luput dan tidak hadir.</li>
+          <li>Tapis Bilik Guna Sama / Makmal; PIC melihat bilik jagaan sendiri, Admin melihat semua.</li>
+        </ul>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/27-report.jpg" alt="Laporan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <!-- ============================== PENTADBIR -->
+  <section class="slide section" data-title="Bahagian 4: Pentadbir" data-group="Pentadbir" data-anchor="admin">
+    <div class="inner">
+      <div class="num">04</div>
+      <h2>Pentadbir</h2>
+      <p class="lead">Penyelia tempahan dan pentadbir sistem: semua tindakan PIC bagi semua bilik, ditambah cuti, peranan, tetapan dan log emel.</p>
+      <div class="who"><span>Penyelia tempahan</span><span>Akaun tempahan.fkten</span><span>Pentadbir Utama</span></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Cuti & pengguna" data-group="Pentadbir">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Pentadbir</div>
+      <h2>Cuti &amp; penutupan · Pengguna &amp; peranan</h2>
+      <p class="lead"><b>Cuti &amp; Penutupan</b>: tutup semua ruang atau satu bilik; tempahan terjejas dikekalkan atau dibatalkan dengan sebab. <b>Pengguna &amp; Peranan</b>: urus Admin, penerima semua emel dan status profil pengguna.</p>
+      <div class="frames2" style="margin-top:22px">
+        <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/30-closures.jpg" alt="Cuti dan penutupan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+        <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/31-users.jpg" alt="Pengguna dan peranan" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Tetapan sistem" data-group="Pentadbir">
+    <div class="inner split rev">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Pentadbir Utama</div>
+        <h2>Tetapan sistem</h2>
+        <ul class="ticks">
+          <li><b>Emel &amp; kalendar</b>: mod emel (OFF / TEST / LIVE), emel ujian, Reply-To, Google Calendar, emel pertanyaan.</li>
+          <li><b>Peraturan tempahan</b>: tempoh notis, had tempahan awal, peringatan, tanda tidak hadir, had gambar, tempat ambil kunci.</li>
+          <li><b>Teks &amp; paparan</b>: teks akuan pemohon dan amaran tempahan segera.</li>
+        </ul>
+        <div class="tip">Mod <b>TEST</b>: semua emel dihantar ke akaun ujian sahaja. Mod <b>LIVE</b>: emel kepada penerima sebenar.</div>
+      </div>
+      <figure class="frame"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/32-settings.jpg" alt="Tetapan sistem" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Emel automatik" data-group="Pentadbir">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Emel automatik</div>
+      <h2>Emel automatik &amp; Log Emel</h2>
+      <div class="split" style="margin-top:6px;align-items:start">
+        <div class="twrap"><table class="t">
+          <tr><th>Bila</th><th>Kepada</th></tr>
+          <tr><td>Tempahan baharu / segera</td><td>PIC bilik (+ salinan Admin)</td></tr>
+          <tr><td>Tempahan diterima</td><td>Pemohon</td></tr>
+          <tr><td>Diluluskan / ditolak</td><td>Pemohon (+ PIC &amp; Admin)</td></tr>
+          <tr><td>Dibatalkan oleh pemohon</td><td>PIC bilik</td></tr>
+          <tr><td>Dibatalkan oleh PIC / ganti khas</td><td>Pemohon, dengan sebab</td></tr>
+          <tr><td>Ditempah bagi pihak / pindahan</td><td>Staf berkenaan</td></tr>
+          <tr><td>Belum diproses &gt; 2 hari bekerja</td><td>Admin</td></tr>
+          <tr><td>Peringatan sehari sebelum</td><td>Pemohon</td></tr>
+          <tr><td>Ringkasan harian 7:30 pagi</td><td>Setiap PIC</td></tr>
+        </table></div>
+        <figure class="frame mailshot"><div class="bar"><span></span><span></span><span></span></div><img src="assets/shots/34-email.jpg" alt="Contoh emel" loading="lazy"><span class="zoom">Klik untuk besarkan</span></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== RUJUKAN -->
+  <section class="slide" data-title="Peraturan utama" data-group="Rujukan" data-anchor="rujukan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Rujukan</div>
+      <h2>Peraturan utama tempahan</h2>
+      <div class="twrap"><table class="t">
+        <tr><th>Perkara</th><th>Peraturan</th></tr>
+        <tr><td>Slot</td><td>30 minit; mula dan tamat pada slot. Tiada masa penimbal.</td></tr>
+        <tr><td>Pertindihan</td><td><b>Tidak dibenarkan.</b> Tempahan menunggu dan diluluskan sama-sama mengunci slot. Bersebelahan dibenarkan (cth. 10:00–11:00 dan 11:00–12:00).</td></tr>
+        <tr><td>Waktu</td><td>Dalam waktu operasi bilik, di luar waktu rehat dan hari cuti / penutupan.</td></tr>
+        <tr><td>Tempoh notis</td><td>3 hari bekerja. Kurang daripada itu masih dibenarkan sebagai <b>Segera</b> (tiada jaminan).</td></tr>
+        <tr><td>Had tempahan awal</td><td>Sehingga 60 hari ke hadapan (tempahan khas dan tempahan bagi pihak tidak terikat).</td></tr>
+        <tr><td>Kelulusan</td><td>Semua tempahan staf perlu kelulusan PIC. Tiada keputusan sebelum masa tamat = <b>Luput</b>.</td></tr>
+        <tr><td>Pembatalan</td><td>Pemohon boleh batal sebelum masa mula. PIC / Admin perlu nyatakan sebab.</td></tr>
+        <tr><td>No. telefon</td><td>Wajib bagi setiap tempahan staf.</td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Akses makmal & FKC" data-group="Rujukan">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Rujukan</div>
+      <h2>Siapa boleh menempah apa</h2>
+      <div class="twrap"><table class="t">
+        <tr><th>Pengguna</th><th>Bilik Guna Sama</th><th>Makmal</th><th>Profil</th></tr>
+        <tr><td>Staf FKTEN (Senarai Induk)</td><td>✓ Tempah</td><td>✓ Tempah</td><td>Automatik</td></tr>
+        <tr><td>Staf FKTEN baharu</td><td>✓ Tempah</td><td>✓ Tempah</td><td>Isi sekali (seperti UniSIS)</td></tr>
+        <tr><td>Staf FKC</td><td>Lihat sahaja</td><td>✓ Tempah</td><td>Isi sekali (seperti UniSIS)</td></tr>
+        <tr><td>Staf fakulti / jabatan lain</td><td>Lihat sahaja</td><td>Lihat sahaja</td><td>Isi sekali; PIC boleh tempah bagi pihak</td></tr>
+        <tr><td>Pelajar (@studentmail)</td><td colspan="3">Tidak dibenarkan log masuk</td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Guna di telefon" data-group="Rujukan">
+    <div class="inner split">
+      <div class="txt">
+        <div class="kicker"><span class="dot"></span>Rujukan</div>
+        <h2>Guna di telefon</h2>
+        <ul class="ticks">
+          <li>Semua halaman menyesuaikan saiz skrin telefon; menu kiri dibuka dengan butang ☰.</li>
+          <li>Jadual: leret atau guna butang ◀ ▶; kad masa memudahkan pilihan masa tamat tanpa perlu menyeret.</li>
+          <li>Banner <b>"Tiada sambungan internet"</b> muncul jika talian terputus; tiada tempahan dihantar sehingga sambungan pulih.</li>
+        </ul>
+      </div>
+      <div class="phones">
+        <div class="phone"><img src="assets/shots/40-phone-home.jpg" alt="Laman utama di telefon" loading="lazy"></div>
+        <div class="phone"><img src="assets/shots/41-phone-timecard.jpg" alt="Kad masa di telefon" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Soalan lazim" data-group="Rujukan" data-anchor="faq">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Soalan lazim</div>
+      <h2>Soalan lazim</h2>
+      <div class="faq">
+        <div>
+          <details><summary>Bolehkah dua orang menempah slot yang sama?</summary><p>Tidak. Slot dikunci sebaik tempahan dihantar (menunggu atau diluluskan). Siapa dahulu, dia dapat.</p></details>
+          <details><summary>Saya tersilap klik Lulus. Apa berlaku?</summary><p>Tiada apa-apa dihantar sehingga anda klik "Sahkan lulus". Klik "Kembali" untuk batal.</p></details>
+          <details><summary>Fakulti perlukan bilik yang telah ditempah staf?</summary><p>PIC / Admin boleh batalkan tempahan tersebut dengan sebab, atau guna Tempahan Khas pilihan "Gantikan". Pemohon diemel secara automatik.</p></details>
+          <details><summary>Bagaimana dengan tempahan dibuat cara lama?</summary><p>PIC memasukkannya melalui "Tempah bagi pihak" dan menanda "Pindahan". Pemohon diemel bahawa tempahan telah dipindahkan.</p></details>
+        </div>
+        <div>
+          <details><summary>Kenapa saya tidak boleh menempah bilik guna sama?</summary><p>Bilik guna sama untuk staf FKTEN sahaja. Staf FKC boleh menempah makmal; staf lain boleh menghubungi PIC.</p></details>
+          <details><summary>Acara tidak muncul dalam Google Calendar saya?</summary><p>Acara ditambah selepas tempahan diluluskan. Semak tempahan dalam Tempahan Saya dan pastikan statusnya Diluluskan.</p></details>
+          <details><summary>Tempahan saya "Luput"?</summary><p>PIC tidak sempat membuat keputusan sebelum masa tamat. Tempahan segera disarankan menghubungi PIC terus.</p></details>
+          <details><summary>Siapa dihubungi untuk pertanyaan?</summary><p>Hal bilik / makmal tertentu: PIC pada halaman bilik. Pertanyaan umum sistem: penyelia tempahan fakulti (emel di bahagian bawah laman utama sistem).</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PENUTUP -->
+  <section class="slide" data-title="Cuba sistem sebenar" data-group="Penutup" data-anchor="cuba">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Untuk PIC</div>
+      <h2>Cuba sistem sebenar</h2>
+      <p class="lead">Mohon setiap PIC mencuba sistem dengan akaun UniMAP masing-masing dan melengkapkan maklumat bilik jagaan.</p>
+      <ol class="steps">
+        <li>Buka sistem dan log masuk dengan akaun UniMAP anda.</li>
+        <li><b>Tetapan Bilik</b>: semak maklumat, kapasiti, waktu operasi dan kemudahan; muat naik 2–3 gambar bilik.</li>
+        <li>Buat <b>satu tempahan ujian</b> pada minggu hadapan, tajuk bermula <b>"UJIAN"</b>.</li>
+        <li>Di <b>Kelulusan</b>: cuba lulus atau tolak tempahan ujian tersebut.</li>
+        <li>Batalkan tempahan ujian selepas selesai.</li>
+      </ol>
+      <div class="tip warn">Dalam tempoh percubaan, emel sistem dihantar ke akaun ujian sahaja (mod TEST). Pemohon dan PIC belum menerima emel sebenar.</div>
+      <div style="margin-top:22px"><a class="tb gold" style="height:46px;padding:0 22px;font-size:.95rem" href="https://script.google.com/a/macros/unimap.edu.my/s/AKfycbwsCuKU1bOhOyePvo0hmSApTvA7wn9X55o3rDx_f9dq1w21M48icOwcY6fN0G-ejtoR/exec" target="_blank" rel="noopener">Buka sistem sebenar ↗</a></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Pelaksanaan & maklum balas" data-group="Penutup">
+    <div class="inner">
+      <div class="kicker"><span class="dot"></span>Penutup</div>
+      <h2>Pelaksanaan &amp; maklum balas</h2>
+      <div class="cards c3">
+        <div class="card"><div class="ico">1</div><h3>Percubaan</h3><p>PIC menguji sistem dan melengkapkan maklumat, waktu operasi dan gambar bilik.</p></div>
+        <div class="card"><div class="ico">2</div><h3>Pindahan</h3><p>PIC memasukkan tempahan sedia ada (kaedah lama) dan jadual kelas makmal sebagai Tempahan Khas.</p></div>
+        <div class="card"><div class="ico">3</div><h3>Pelancaran</h3><p>Mod emel LIVE dan hebahan kepada semua staf FKTEN (dan FKC bagi makmal).</p></div>
+      </div>
+      <h3 style="margin-top:28px">Maklum balas yang diharapkan</h3>
+      <ul class="ticks">
+        <li>Adakah maklumat, kapasiti dan waktu operasi bilik / makmal anda betul?</li>
+        <li>Adakah tempoh notis 3 hari bekerja dan had 2 bulan sesuai?</li>
+        <li>Pelulus bagi setiap bilik: adakah perlu ditambah atau ditukar?</li>
+        <li>Apa yang kurang atau mengelirukan semasa mencuba?</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide cover" data-title="Terima kasih" data-group="Penutup">
+    <div class="inner">
+      <span class="logomark xl"><b>Rooms</b><i></i><em>FKTEN</em></span>
+      <h1 style="font-size:clamp(2rem,4vw,3.2rem)">Terima kasih</h1>
+      <div class="cards c2" style="width:100%;max-width:900px">
+        <div class="card" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff"><h3>Hal bilik &amp; makmal</h3><p style="color:#c8eadb">PIC yang tertera pada halaman setiap bilik / makmal dalam sistem.</p></div>
+        <div class="card" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff"><h3>Bantuan sistem</h3><p style="color:#c8eadb">Ts. Dr. Mohd Zamri bin Zahir Ahmad<br>Pensyarah Kanan, FKTEN<br><a style="color:var(--gold)" href="mailto:zamrizahir@unimap.edu.my">zamrizahir@unimap.edu.my</a></p></div>
+      </div>
+      <div class="btns"><a class="btn gold" href="https://script.google.com/a/macros/unimap.edu.my/s/AKfycbwsCuKU1bOhOyePvo0hmSApTvA7wn9X55o3rDx_f9dq1w21M48icOwcY6fN0G-ejtoR/exec" target="_blank" rel="noopener">Buka sistem sebenar ↗</a><button class="btn" data-go="first">↺ Kembali ke awal</button><button class="btn" data-ov>Kandungan</button></div>
+      <div class="hint">Sistem Tempahan Bilik FKTEN · Fakulti Kejuruteraan &amp; Teknologi Elektronik (FKTEN) · Universiti Malaysia Perlis</div>
+    </div>
+  </section>
+</main>
+
+<nav class="bottom">
+  <button class="navbtn" id="prev" aria-label="Slaid sebelum">← <span class="hide-sm">Sebelum</span></button>
+  <span class="count" id="count"></span>
+  <span class="title" id="stitle"></span>
+  <button class="navbtn next" id="next" aria-label="Slaid seterusnya"><span class="hide-sm">Seterusnya</span> →</button>
+</nav>
+
+<div class="overview" id="overview" role="dialog" aria-label="Kandungan">
+  <div class="ov-head"><h2 style="font-size:1.4rem">Kandungan</h2><button class="tb" id="ov-close">Tutup ✕</button></div>
+  <div id="ov-body"></div>
+</div>
+<div class="lightbox" id="lightbox"><span class="x">Klik atau tekan Esc untuk tutup</span><img alt=""></div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var cur = 0;
+  var $ = function (id) { return document.getElementById(id); };
+  function show(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, k) { s.classList.toggle('on', k === i); s.classList.toggle('prev', k < i); });
+    cur = i;
+    slides[i].scrollTop = 0;
+    $('count').textContent = (i + 1) + ' / ' + slides.length;
+    $('stitle').textContent = slides[i].dataset.group + ' · ' + slides[i].dataset.title;
+    $('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+    $('prev').disabled = i === 0; $('next').disabled = i === slides.length - 1;
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+    document.title = slides[i].dataset.title + ' · Manual Pengguna Sistem Tempahan Bilik FKTEN';
+  }
+  var go = function (d) { show(cur + d); };
+  $('prev').onclick = function () { go(-1); };
+  $('next').onclick = function () { go(1); };
+  document.querySelectorAll('[data-go]').forEach(function (b) { b.onclick = function () { b.dataset.go === 'next' ? go(1) : show(0); }; });
+  document.querySelectorAll('[data-jump]').forEach(function (a) {
+    a.onclick = function (e) { e.preventDefault(); var t = slides.findIndex(function (s) { return s.dataset.anchor === a.dataset.jump; }); if (t >= 0) show(t); };
+  });
+  function buildOverview() {
+    var groups = {}, order = [];
+    slides.forEach(function (s, i) { var g = s.dataset.group; if (!groups[g]) { groups[g] = []; order.push(g); } groups[g].push(i); });
+    $('ov-body').innerHTML = order.map(function (g) {
+      return '<div class="ov-group"><h3>' + g + '</h3><div class="ov-grid">' + groups[g].map(function (i) {
+        return '<button class="ov-item' + (i === cur ? ' on' : '') + '" data-i="' + i + '"><b>' + (i + 1) + '</b>' + slides[i].dataset.title + '</button>';
+      }).join('') + '</div></div>';
+    }).join('');
+    $('ov-body').querySelectorAll('[data-i]').forEach(function (b) { b.onclick = function () { closeOv(); show(+b.dataset.i); }; });
+  }
+  function openOv() { buildOverview(); $('overview').classList.add('on'); }
+  function closeOv() { $('overview').classList.remove('on'); }
+  $('btn-ov').onclick = openOv; $('ov-close').onclick = closeOv;
+  document.querySelectorAll('[data-ov]').forEach(function (b) { b.onclick = openOv; });
+  $('btn-theme').onclick = function () {
+    var dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    var t = dark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+    try { localStorage.setItem('roomsman_theme', t); } catch (e) {}
+  };
+  function fs() { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+  $('btn-fs').onclick = fs;
+  var lb = $('lightbox');
+  document.querySelectorAll('.frame, .phone').forEach(function (f) {
+    f.onclick = function () { lb.querySelector('img').src = f.querySelector('img').src; lb.querySelector('img').alt = f.querySelector('img').alt; lb.classList.add('on'); };
+  });
+  lb.onclick = function () { lb.classList.remove('on'); };
+  var flow = $('flow'), detail = $('flow-detail');
+  function flowPick(c) { flow.querySelectorAll('.card').forEach(function (x) { x.classList.toggle('on', x === c); }); detail.textContent = c.dataset.d; }
+  flow.querySelectorAll('.card').forEach(function (c) { c.onclick = function () { flowPick(c); }; });
+  flowPick(flow.querySelector('.card'));
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest('input, textarea, select')) return;
+    if (lb.classList.contains('on') || $('overview').classList.contains('on')) { if (e.key === 'Escape') { lb.classList.remove('on'); closeOv(); } return; }
+    if (['ArrowRight', 'PageDown', ' '].indexOf(e.key) >= 0) { e.preventDefault(); go(1); }
+    else if (['ArrowLeft', 'PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); go(-1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'o' || e.key === 'O') openOv();
+    else if (e.key === 'f' || e.key === 'F') fs();
+  });
+  var sx = null;
+  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1); sx = null; });
+  window.addEventListener('hashchange', function () { var n = parseInt((location.hash || '').slice(1), 10); if (!isNaN(n) && n - 1 !== cur) show(n - 1); });
+  var start = parseInt((location.hash || '').slice(1), 10);
+  show(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+</body>
+</html>
